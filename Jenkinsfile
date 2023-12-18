@@ -23,8 +23,10 @@ pipeline {
             }
         }
         stage('Docker Push') {
-            steps {
-               sh "docker push kammana/pyapp:${DOCKER_TAG}"
+             steps{
+            withCredentials([usernamePassword(credentialsId: 'hub-credentials', passwordVariable: 'hubPwd', usernameVariable: 'hubUser')]) {
+     sh "docker login -u ${hubUser} -p ${hubPwd}"
+       sh "docker push docker0237/java-tech:0.0.2"      
             }
         }
         stage("Dev Deploy"){
