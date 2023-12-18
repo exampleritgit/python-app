@@ -15,13 +15,7 @@ pipeline {
                 sh "docker build -t kammana/pyapp:${DOCKER_TAG} ."
             }
         }
-        stage('Docker Login') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pwd', usernameVariable: 'usr')]) {
-                    sh "docker login -u ${usr} -p ${pwd}"
-                }
-            }
-        }
+       
         stage('Docker Push') {
              steps{
             withCredentials([usernamePassword(credentialsId: 'hub-credentials', passwordVariable: 'hubPwd', usernameVariable: 'hubUser')]) {
